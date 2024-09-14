@@ -107,7 +107,7 @@ yarn tauri build
 ## Roadmap
 
 - [x] Working app
-- [ ] Move to `yay` instead of `yay`
+- [x] Move to `yay` instead of `paru`
 - [ ] Add a settings page
 
 See the [open issues](https://github.com/dan-online/Parrot/issues) for a full list of proposed features (and known issues).

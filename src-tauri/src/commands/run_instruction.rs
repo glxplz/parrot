@@ -13,7 +13,7 @@ pub async fn run_instruction(
 ) {
     let config = ConfigStore::new(window.app_handle().path_resolver());
 
-    let path = config.get("paru").unwrap().unwrap_or("paru".to_string());
+    let path = config.get("yay").unwrap().unwrap_or("yay".to_string());
     let (tx, rx) = channel::<Log>();
 
     match instruction.as_str() {

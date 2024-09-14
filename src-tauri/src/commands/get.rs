@@ -12,7 +12,7 @@ pub async fn get(window: Window, repo: String, name: String, id: String) {
     let store = DataStore::new(window.app_handle().path_resolver());
     let config = ConfigStore::new(window.app_handle().path_resolver());
 
-    let path = config.get("paru").unwrap().unwrap_or("paru".to_string());
+    let path = config.get("yay").unwrap().unwrap_or("yay".to_string());
     let full = format!("{}/{}", repo, name);
 
     match store.get::<Vec<Option<FullInfo>>>(&full) {

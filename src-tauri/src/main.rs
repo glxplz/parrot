@@ -40,6 +40,7 @@ use std::sync::mpsc::Sender;
 use std::thread;
 use std::time::Instant;
 use structs::info::Log;
+use flate2::read::GzDecoder;
 
 fn run(path: String, args: &[&str]) -> Result<String, Box<dyn Error>> {
     let start = Instant::now();
@@ -50,7 +51,7 @@ fn run(path: String, args: &[&str]) -> Result<String, Box<dyn Error>> {
 
     println!(
         "[parrot] Command {} finished in {:?}, code {}",
-        format!("paru {}", args.join(" ")),
+        format!("yay {}", args.join(" ")),
         duration,
         output.status.code().unwrap_or(-1)
     );
@@ -123,16 +124,16 @@ fn run_log(path: String, args: Vec<String>, sender: Sender<Log>) {
         let duration = start.elapsed();
         println!(
             "[parrot] Command {} finished in {:?}",
-            format!("paru {}", args.join(" ")),
+            format!("yay {}", args.join(" ")),
             duration
         );
     });
 }
 
-fn download_paru(resolver: PathResolver) {
+fn download_yay(resolver: PathResolver) {
     let config = ConfigStore::new(resolver.clone());
 
-    let url = "https://api.github.com/repos/Morganamilo/paru/releases/latest";
+    let url = "https://api.github.com/repos/Jguer/yay/releases/latest";
 
     let app_user_agent: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
     let client = Client::builder()
@@ -145,9 +146,9 @@ fn download_paru(resolver: PathResolver) {
     match res.json::<serde_json::Value>() {
         Ok(json) => {
             let remote_version = json["tag_name"].as_str().unwrap();
-            let has_paru = config.get::<String>("paru").unwrap_or(None).is_some();
+            let has_yay = config.get::<String>("yay").unwrap_or(None).is_some();
 
-            if has_paru {
+            if has_yay {
                 match config.get::<String>("version") {
                     Ok(local_version) => match local_version {
                         Some(local_version) => {
@@ -179,16 +180,16 @@ fn download_paru(resolver: PathResolver) {
             let resp = reqwest::blocking::get(&download_url).unwrap();
 
             // uncompress using zstd
-            let decoder_zst = zstd::Decoder::new(resp).unwrap();
+            let decoder_gz: GzDecoder<reqwest::blocking::Response> = GzDecoder::new(resp);
 
-            let path = resolver.app_data_dir().unwrap().join("paru");
-            let bin_path = path.join("paru");
+            let path = resolver.app_data_dir().unwrap();
+            let bin_path = path.join(download_url.to_string().split("/").last().unwrap().strip_suffix(".tar.gz").unwrap()).join("yay");
 
-            tar::Archive::new(decoder_zst).unpack(&path).unwrap();
+            tar::Archive::new(decoder_gz).unpack(&path).unwrap();
 
-            println!("[parrot] Downloaded paru to {:?}", path);
+            println!("[parrot] Downloaded yay to {:?}", bin_path);
 
-            config.set("paru", bin_path.to_str().unwrap()).unwrap();
+            config.set("yay", bin_path.to_str().unwrap()).unwrap();
             config.set("version", remote_version).unwrap();
         }
         Err(e) => {
@@ -209,7 +210,7 @@ fn main() {
             installed_search
         ])
         .setup(|app| {
-            download_paru(app.path_resolver());
+            download_yay(app.path_resolver());
             Ok(())
         })
         .run(tauri::generate_context!())

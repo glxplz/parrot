@@ -16,7 +16,7 @@
   <h3 align="center">Parrot</h3>
 
   <p align="center">
-    A Rust-based GUI wrapper in Tauri for the Arch Linux package manager, pacman using the wrapper <code>paru</code>. Designed to be intuitive, powerful and user-friendly 
+    A Rust-based GUI wrapper in Tauri for the Arch Linux package manager, pacman using the wrapper <code>yay</code>. Designed to be intuitive, powerful and user-friendly 
     <br />
     <a href="https://github.com/dan-online/Parrot/releases/latest">Download</a>
     ·
@@ -48,7 +48,7 @@
 
 <img src="public/product.png">
 
-Parrot is a GUI for the Arch Linux package manager, `paru`, a wrapper of `pacman`. Parrot is designed to provide users with a more intuitive and user-friendly way to search, manage, and install packages on their Arch Linux systems.
+Parrot is a GUI for the Arch Linux package manager, `yay`, a wrapper of `pacman`. Parrot is designed to provide users with a more intuitive and user-friendly way to search, manage, and install packages on their Arch Linux systems.
 
 With Parrot's sleek GUI, users can easily browse available packages, search for specific packages, and install or uninstall them with just a few clicks. Whether you're a beginner or an advanced Arch Linux user, Parrot is a powerful tool that can help you manage your system more efficiently.
 
@@ -107,7 +107,7 @@ yarn tauri build
 ## Roadmap
 
 - [x] Working app
-- [ ] Move to `yay` instead of `paru`
+- [ ] Move to `yay` instead of `yay`
 - [ ] Add a settings page
 
 See the [open issues](https://github.com/dan-online/Parrot/issues) for a full list of proposed features (and known issues).

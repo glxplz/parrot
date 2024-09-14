@@ -14,7 +14,7 @@ pub async fn search(window: Window, query: String, local: bool) {
     let store = DataStore::new(window.app_handle().path_resolver());
     let config = ConfigStore::new(window.app_handle().path_resolver());
 
-    let path = config.get("paru").unwrap().unwrap_or("paru".to_string());
+    let path = config.get("yay").unwrap().unwrap_or("yay".to_string());
     let key = format!("search-{}", query);
 
     match store.get::<Vec<SearchInfo>>(&key) {

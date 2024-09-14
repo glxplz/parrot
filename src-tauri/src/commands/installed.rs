@@ -9,7 +9,7 @@ use crate::structs::info::FullInfo;
 #[tauri::command]
 pub async fn installed(window: Window) {
     let config = ConfigStore::new(window.app_handle().path_resolver());
-    let path = config.get("paru").unwrap().unwrap_or("paru".to_string());
+    let path = config.get("yay").unwrap().unwrap_or("yay".to_string());
 
     let mut results: Vec<FullInfo> = vec![];
 
@@ -39,7 +39,7 @@ pub async fn installed(window: Window) {
 #[tauri::command]
 pub async fn installed_search(window: Window, query: String, id: String) {
     let config = ConfigStore::new(window.app_handle().path_resolver());
-    let path = config.get("paru").unwrap().unwrap_or("paru".to_string());
+    let path = config.get("yay").unwrap().unwrap_or("yay".to_string());
 
     let ran = run(path.clone(), &["-Qs", query.as_str()]);
 
